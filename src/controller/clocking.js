@@ -76,17 +76,25 @@ export const clockout = async (req, res ) => {
   try {
     const { employee_id } = req.body;
 
-    const lastClockin = await Clocking.findById({
-        employee:employee_id,
-        clockoutTime: require,
+    // Check if the provided employee_id exists in the Employee collection
+    const existingEmployee = await Employee.findById(employee_id);
+if (!existingEmployee) {
+      return res.status(400).json({ message: 'Employee not found' });
+    }
     
-      order: [["clockinTime", "DESC"]],
+// Check if the employee has already clocked out today
+    const existingClockout = await Clocking.findById({
+        employee: employee_id,
+        timestamp: {
+          $gte: new Date(new Date().setHours(0, 0, 0, 0)),
+        },
+    
     });
 
-    if (!lastClockin) {
+    if (existingClockout) {
       return res
         .status(400)
-        .json({ message: "Employee has not clocked in or already clocked out" });
+        .json({ message: "Employee has  or already clocked out" });
     }
     lastClockin.clockoutTime = new Date();
     await lastClockin.save();
