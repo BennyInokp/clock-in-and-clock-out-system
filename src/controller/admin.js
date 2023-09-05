@@ -23,11 +23,11 @@ export const addAdmin = async (req, res, next) => {
         role,
         
        }).then((user) => {
-        const maxAge = 3 * 60 * 60;
+        const expiresIn = null;
         const token = jwt.sign(
           { id: user._id, email },
           process.env.JWT_SECRET_KEY,
-          { expiresIn: maxAge }
+          { expiresIn }
         );
         res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(201).json({ message: "Admin successfully created", user });
@@ -61,12 +61,12 @@ export const adminSignin = async (req, res, next) => {
     return res.status(400).json({ message: "Incorrect Password" });
   }
 
-  const maxAge = 3 * 60 * 60;
+  const expiresIn = null;
 
   const token = jwt.sign(
     { id: existingUser._id, email },
     process.env.JWT_SECRET_KEY,
-    { expiresIn: maxAge }
+    { expiresIn }
   );
   res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
 

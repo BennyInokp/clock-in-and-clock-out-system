@@ -13,7 +13,7 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   }, 
-  // Other employee fields. 
+  
 });
 
 export default mongoose.model("Employee", employeeSchema);

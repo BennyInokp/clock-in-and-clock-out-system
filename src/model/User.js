@@ -26,7 +26,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  // Other user fields like name, profile picture, etc.
+  
 });
 
 export default mongoose.model("User", userSchema);
