@@ -4,8 +4,8 @@ import connectDB from "./src/config/mongo.js";
 import cors from "cors";
 import userRouter from "./src/routes/user.js";
 import adminRouter from "./src/routes/admin.js";
-import clockRouter from "./src/routes/clock.js";
-import employeeRouter from "./src/routes/employee.js";
+ import employeeRouter from "./src/routes/employee.js";
+import clockingRouter from "./src/routes/clocking.js";
 // import crypto from 'crypto'
 
 
@@ -22,10 +22,10 @@ app.use(
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use("/user", userRouter);
-app.use("/admin", adminRouter);
-app.use("/clock", clockRouter);
+ app.use("/user", userRouter);
+ app.use("/admin", adminRouter);
 app.use("/employee", employeeRouter);
+app.use("/clocking",clockingRouter )
 
 
 

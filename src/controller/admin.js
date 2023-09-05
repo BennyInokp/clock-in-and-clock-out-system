@@ -30,7 +30,7 @@ export const addAdmin = async (req, res, next) => {
           { expiresIn: maxAge }
         );
         res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(201).json({ message: "User successfully created", user });
+        res.status(201).json({ message: "Admin successfully created", user });
       });
     });
   } catch (err) {
