@@ -25,11 +25,11 @@ export const register = async (req, res, next) => {
         picture,
         
       }).then((user) => {
-        const expiresIn = null;
+        const maxAge = 365 * 24 * 60 * 60;
         const token = jwt.sign(
           { id: user._id, email },
           process.env.JWT_SECRET_KEY,
-          { expiresIn}
+          { expiresIn: maxAge }
         );
         res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(201).json({ message: "User successfully created", user });
@@ -93,12 +93,12 @@ export const signin = async (req, res, next) => {
     return res.status(400).json({ message: "Incorrect Password" });
   }
 
-  const expiresIn = null;
+  const maxAge = 365 * 24 * 60 * 60;
 
   const token = jwt.sign(
     { id: existingUser._id, email },
     process.env.JWT_SECRET_KEY,
-    { expiresIn }
+    { expiresIn: maxAge }
   );
   res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
 
@@ -126,6 +126,6 @@ export const profile = async (req, res, next) => {
 
 // logout
 export const logout =async  (req, res) => {
-  res.cookie("jwt", "", { maxAge: 0 });
+  res.cookie("jwt", "", { maxAge: "1" });
   res.redirect("/");
 };

@@ -35,7 +35,9 @@ if (!existingEmployee) {
   }
 };
 
+
     
+
 export const clockout = async (req, res) => {
   try {
     const { employee_id } = req.body;
