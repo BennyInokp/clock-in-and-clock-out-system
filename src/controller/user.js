@@ -1,6 +1,8 @@
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import express from "express";
+
 
 export const register = async (req, res, next) => {
   const { fullName, email, password, contact, gender, picture } = req.body;
@@ -43,36 +45,6 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const updateProfile = async (req, res, next) => {
-  const id = req.params.id;
-  const { username, email } = req.body;
-  if (
-    !username &&
-    username.trim() === "" &&
-    !email &&
-    email.trim() === "" &&
-    !password &&
-    password.trim() === ""
-  ) {
-    return res.status(422).json({ message: "Invalid Inputs" });
-  }
-
-  let user;
-  try {
-    user = await User.findByIdAndUpdate(id, {
-      username,
-      email,
-    });
-  } catch (errr) {
-    return console.log(errr);
-  }
-  if (!user) {
-    return res.status(500).json({ message: "Something went wrong" });
-  }
-  res.status(200).json({ message: "Updated Sucessfully" });
-};
-
-
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email && email.trim() === "" && !password && password.trim() === "") {
@@ -107,20 +79,9 @@ export const signin = async (req, res, next) => {
     .json({ message: "Authentication Complete", token, id: existingUser._id, existingUser });
 };
 
-
-export const profile = async (req, res, next) => {
-  const id = req.params.id;
-
-  let user;
-  try {
-    user = await User.findById(id)
-  } catch (err) {
-    return console.log(err);
-  }
-  if (!user) {
-    return console.log("Cannot find User");
-  }
-  return res.status(200).json({ user });
-};
-
-
+// logout
+ export const user = express.Router();
+user.get("/logout", (req, res) => {
+  res.cookie("jwt", "", { maxAge: "1" });
+  res.redirect("/");
+});
