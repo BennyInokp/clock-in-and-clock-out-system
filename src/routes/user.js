@@ -4,7 +4,7 @@ import {
   signin,
   profile,
   updateProfile,
-  logout
+  
 
 } from "../controller/user.js";
 import auth from "../middleware/auth.js";
