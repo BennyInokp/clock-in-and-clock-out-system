@@ -35,7 +35,7 @@ export const addAdmin = async (req, res, next) => {
     });
   } catch (err) {
     res.status(400).json({
-      message: "User not successfully created",
+      message: "Admin not successfully created",
       error: err.message,
     });
   }
