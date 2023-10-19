@@ -1,7 +1,14 @@
+
+
+
 import Employee from "../model/Employee.js";
+import Admin from "../model/Admin.js"; // Import the Admin model
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+
 
 // Create Employee
+
 export const createEmployee = async (req, res) => {
   const extractedToken = req.headers.authorization.split(" ")[1];
   if (!extractedToken) {
@@ -10,16 +17,30 @@ export const createEmployee = async (req, res) => {
 
   try {
     const decoded = jwt.verify(extractedToken, process.env.JWT_SECRET_KEY);
+    //const adminId = decoded.id;
+    if (!decoded || !decoded.id) {
+      return res.status(400).json({ message: "Invalid token" });
+    }
+
     const adminId = decoded.id;
-console.log(adminId)
+
+    if (!mongoose.Types.ObjectId.isValid(adminId)) {
+      return res.status(400).json({ message: "Invalid adminId" });
+    }
+
+      // Include the admin field in the request data
     const { fullName, department, contact } = req.body;
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
     const employee = await Employee.create({
+      admin: adminId, // Use the adminId to create employee
       fullName,
       department,
       contact,
-      adminId, // Use the adminId to create employee
     });
-console.log(employee)
+
     res.status(201).json({ message: "Employee created successfully", employee });
   } catch (error) {
     console.error(error);
