@@ -11,6 +11,6 @@ const employeeRouter = express.Router();
 employeeRouter.get("/", auth, listEmployees);
 employeeRouter.put("/:id", auth, updateEmployee);
 employeeRouter.delete("/:id", auth, deleteEmployee);
-employeeRouter.post("/", auth,  createEmployee);
+employeeRouter.post("/", auth, createEmployee);
 
 export default employeeRouter;

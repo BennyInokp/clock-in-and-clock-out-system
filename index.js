@@ -6,7 +6,7 @@ import userRouter from "./src/routes/user.js";
 import adminRouter from "./src/routes/admin.js";
  import employeeRouter from "./src/routes/employee.js";
 import clockingRouter from "./src/routes/clocking.js";
-// import crypto from 'crypto'
+ //import crypto from 'crypto'
 
 
 dotenv.config();
@@ -31,9 +31,9 @@ app.use("/clocking",clockingRouter )
 
 async function connect() {
   try {
-    app.listen(7000, () => {
+    app.listen(7100, () => {
       connectDB(process.env.MONGODB_PASSWORD);
-      console.log("server is running on  port 7000");
+      console.log("server is running on  port 7100");
     });
   } catch (err) {
     console.log(err);
@@ -43,7 +43,7 @@ async function connect() {
 }
 connect();
 
-// to generate jwt token
+//to generate jwt token
 
 // const secrectkey = crypto.randomBytes(32).toString('hex');
 // console.log(secrectkey);

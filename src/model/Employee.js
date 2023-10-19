@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 
 const employeeSchema = new mongoose.Schema({
-  name: {
+  admin: {
+    type: mongoose.Types.ObjectId,
+    ref: "Admin",
+    required: true,
+  },
+  fullName: {
     type: String,
     required: true,
   },
@@ -10,9 +15,10 @@ const employeeSchema = new mongoose.Schema({
     required: true,
   },
   contact: {
-    type: String,
+    type: Number,
     required: true,
   }, 
+ 
   
 });
 

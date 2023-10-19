@@ -10,6 +10,7 @@ export const register = async (req, res, next) => {
   if (!fullName || !email || !password || !contact || !gender || !picture) {
     return res.status(400).json({ message: "all fields are required" });
   }
+  
   if (email.indexOf("@") === -1) {
     return res.status(400).json({ message: "invalid email" });
   }
@@ -65,7 +66,7 @@ export const signin = async (req, res, next) => {
     return res.status(400).json({ message: "Incorrect Password" });
   }
 
-  const maxAge = 365 * 24 * 60 * 60;
+  const maxAge = 365 * 24* 60 * 60;
 
   const token = jwt.sign(
     { id: existingUser._id, email },
@@ -80,8 +81,8 @@ export const signin = async (req, res, next) => {
 };
 
 // logout
- export const user = express.Router();
-user.get("/logout", (req, res) => {
+const user = express.Router();
+ user.get("/logout", (req, res) => {
   res.cookie("jwt", "", { maxAge: "1" });
   res.redirect("/");
 });
