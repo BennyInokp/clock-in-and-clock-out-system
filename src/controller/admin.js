@@ -23,7 +23,7 @@ export const addAdmin = async (req, res, next) => {
         role,
         
        }).then((user) => {
-        const maxAge = 365 * 24 * 60 * 60;
+        const maxAge = 3 * 60 * 60;
         const token = jwt.sign(
           { id: user._id, email },
           process.env.JWT_SECRET_KEY,
@@ -61,7 +61,7 @@ export const adminSignin = async (req, res, next) => {
     return res.status(400).json({ message: "Incorrect Password" });
   }
 
-  const maxAge = 365* 24 * 60 * 60;
+  const maxAge =  3 * 60 * 60;
 
   const token = jwt.sign(
     { id: existingUser._id, email },

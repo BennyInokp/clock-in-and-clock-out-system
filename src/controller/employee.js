@@ -1,6 +1,4 @@
 
-
-
 import Employee from "../model/Employee.js";
 import Admin from "../model/Admin.js"; // Import the Admin model
 import jwt from "jsonwebtoken";
